@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('car_models', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->bigInteger('make_id')->unsigned()->index();
+            $table->foreign('make_id')->references('id')->on('makes');
             $table->timestamps();
         });
     }
