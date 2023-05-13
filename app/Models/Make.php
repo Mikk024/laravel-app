@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Make extends Model
 {
     use HasFactory;
+
+    public function model()
+    {
+        return $this->hasMany(CarModel::class);
+    }
 }

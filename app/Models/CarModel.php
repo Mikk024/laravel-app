@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class CarModel extends Model
 {
     use HasFactory;
+
+
+    public function make()
+    {
+        return $this->belongsTo(Make::class);
+    }
 }
