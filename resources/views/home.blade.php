@@ -41,9 +41,9 @@
                     fuel
                     <select name="fuel" class="block px-6 py-2 bg-gray-200 rounded-md">
                         <option selected>Choose fuel</option>
-                        <option>Diesel</option>
-                        <option>Gas</option>
-                        <option>EV</option>
+                        @foreach ($fuel as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>                            
+                        @endforeach
                     </select>
                 </label>
             </div>
