@@ -10,9 +10,9 @@
                     body style
                     <select name="body" class="block px-6 py-2 bg-gray-200 rounded-md">
                         <option selected>Choose body style</option>
-                        <option>Wagon</option>
-                        <option>Coupe</option>
-                        <option>Convertible</option>
+                        @foreach ($body as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
                     </select>
                 </label>
                 <label for="make" class="capitalize">
