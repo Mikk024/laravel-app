@@ -17,5 +17,10 @@ class ModelSeeder extends Seeder
             'name' => 'E class',
             'make_id' => 1
         ]);
+
+        CarModel::create([
+            'name' => '5 Series',
+            'make_id' => 2
+        ]);
     }
 }

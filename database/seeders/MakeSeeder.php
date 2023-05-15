@@ -16,5 +16,9 @@ class MakeSeeder extends Seeder
         Make::create([
             'name' => 'Mercedes-Benz'
         ]);
+
+        Make::create([
+            'name' => 'BMW'
+        ]);
     }
 }
