@@ -4,66 +4,67 @@
     <div class="px-10 mt-10 flex justify-center">
         <div class="px-20 py-4 shadow-xl mb-20">
             <p class="text-3xl capitalize text-center">add listing</p>
-            <form action="" class="flex flex-col items-center">
+            <form method="POST" class="flex flex-col items-center" enctype="multipart/form-data" action="{{ route('listing.store') }}">
+                @csrf
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="make" class="capitalize">make</label>
                     <select name="make" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose make</option>
+                        <option selected value="">Choose make</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="model" class="capitalize">model</label>
-                    <select name="make" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose model</option>
+                    <select name="model" class="px-8 py-2 rounded-md bg-gray-200 block">
+                        <option selected value="">Choose model</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="fuel" class="capitalize">fuel</label>
                     <select name="fuel" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose fuel</option>
+                        <option selected value="">Choose fuel</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="year" class="capitalize">year</label>
                     <select name="year" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose year</option>
+                        <option selected value="">Choose year</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="body" class="capitalize">body style</label>
                     <select name="body" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose body style</option>
+                        <option selected value="">Choose body style</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="horsepower" class="capitalize">horsepower</label>
-                    <input type="number" class="px-8 py-2 rounded-md bg-gray-200 block">
+                    <input type="number" name="horsepower" class="px-8 py-2 rounded-md bg-gray-200 block">
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="capacity" class="capitalize">engine capacity (cm3)</label>
-                    <input type="number" class="px-8 py-2 rounded-md bg-gray-200 block">
+                    <input type="number" name="capacity" class="px-8 py-2 rounded-md bg-gray-200 block">
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="doors" class="capitalize">doors</label>
                     <select name="doors" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose number of doors</option>
+                        <option selected value="">Choose number of doors</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="color" class="capitalize">color</label>
                     <select name="color" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose color</option>
+                        <option selected value="">Choose color</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="transmission" class="capitalize">transmission</label>
                     <select name="transmission" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected>Choose transmission</option>
+                        <option selected value="">Choose transmission</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="images" class="capitalize">images</label>
-                    <input type="file" name="images[]" class="block">
+                    <input type="file" name="images[]" class="block" multiple>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="premium" class="capitalize">premium</label>
