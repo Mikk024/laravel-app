@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <nav class="shadow-xl sticky top-0 z-50 capitalize">
+    <nav class="shadow-md sticky top-0 z-50 capitalize bg-gray-300">
         <div class="container px-10 py-4 flex justify-between">
             <a href="#">home</a>
             <div class="space-x-2">
