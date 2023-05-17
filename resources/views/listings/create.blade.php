@@ -6,34 +6,32 @@
             <p class="text-3xl capitalize text-center">add listing</p>
             <form method="POST" class="flex flex-col items-center" enctype="multipart/form-data" action="{{ route('listing.store') }}">
                 @csrf
-                <div class="my-6 space-y-2 text-center text-xl">
-                    <label for="make" class="capitalize">make</label>
-                    <select name="make" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected value="">Choose make</option>
-                    </select>
-                </div>
-                <div class="my-6 space-y-2 text-center text-xl">
-                    <label for="model" class="capitalize">model</label>
-                    <select name="model" class="px-8 py-2 rounded-md bg-gray-200 block">
-                        <option selected value="">Choose model</option>
-                    </select>
-                </div>
+                <livewire:drop-down-form>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="fuel" class="capitalize">fuel</label>
                     <select name="fuel" class="px-8 py-2 rounded-md bg-gray-200 block">
                         <option selected value="">Choose fuel</option>
+                        @foreach ($fuel as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="year" class="capitalize">year</label>
                     <select name="year" class="px-8 py-2 rounded-md bg-gray-200 block">
                         <option selected value="">Choose year</option>
+                        @for ($i = 1980; $i < $currentYear; $i++)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="body" class="capitalize">body style</label>
                     <select name="body" class="px-8 py-2 rounded-md bg-gray-200 block">
                         <option selected value="">Choose body style</option>
+                        @foreach ($body as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
@@ -48,18 +46,26 @@
                     <label for="doors" class="capitalize">doors</label>
                     <select name="doors" class="px-8 py-2 rounded-md bg-gray-200 block">
                         <option selected value="">Choose number of doors</option>
+                        @for ($i = 1; $i < 8; $i++)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="color" class="capitalize">color</label>
                     <select name="color" class="px-8 py-2 rounded-md bg-gray-200 block">
                         <option selected value="">Choose color</option>
+                        @foreach ($color as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="transmission" class="capitalize">transmission</label>
                     <select name="transmission" class="px-8 py-2 rounded-md bg-gray-200 block">
                         <option selected value="">Choose transmission</option>
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
                     </select>
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
