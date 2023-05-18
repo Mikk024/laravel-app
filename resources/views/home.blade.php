@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="px-10 mt-10">
-    <div class="card px-6 shadow-lg">
+    <div class="card px-6 shadow-lg py-6">
         <p class="text-center text-lg capitalize py-4">what are you looking for?</p>
         <form action="">
             <div class="flex justify-around mb-10">
