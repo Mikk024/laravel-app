@@ -7,6 +7,9 @@
                 <option value="{{ $make->id }}">{{ $make->name }}</option>
             @endforeach
         </select>
+        @error('make')
+            <p class="text-red-500">{{ $message }}</p>
+        @enderror
     </div>
     <div class="my-6 space-y-2 text-center text-xl">
         <label for="model" class="capitalize">model</label>
@@ -16,5 +19,8 @@
                 <option value="{{ $model->id }}">{{ $model->name }}</option>
             @endforeach
         </select>
+        @error('model')
+            <p class="text-red-500">{{ $message }}</p>
+        @enderror
     </div>
 </div>

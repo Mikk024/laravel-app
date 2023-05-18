@@ -15,6 +15,9 @@
                             <option value="{{ $item }}">{{ $item }}</option>
                         @endforeach
                     </select>
+                    @error('fuel')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="year" class="capitalize">year</label>
@@ -24,6 +27,9 @@
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
                     </select>
+                    @error('year')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="body" class="capitalize">body style</label>
@@ -33,14 +39,23 @@
                             <option value="{{ $item }}">{{ $item }}</option>
                         @endforeach
                     </select>
+                    @error('body')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="horsepower" class="capitalize">horsepower</label>
                     <input type="number" name="horsepower" class="px-8 py-2 rounded-md bg-gray-200 block">
+                    @error('horsepower')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="capacity" class="capitalize">engine capacity (cm3)</label>
                     <input type="number" name="capacity" class="px-8 py-2 rounded-md bg-gray-200 block">
+                    @error('capacity')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="doors" class="capitalize">doors</label>
@@ -50,6 +65,9 @@
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
                     </select>
+                    @error('doors')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="color" class="capitalize">color</label>
@@ -59,6 +77,9 @@
                             <option value="{{ $item }}">{{ $item }}</option>
                         @endforeach
                     </select>
+                    @error('color')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="transmission" class="capitalize">transmission</label>
@@ -67,10 +88,16 @@
                         <option value="Automatic">Automatic</option>
                         <option value="Manual">Manual</option>
                     </select>
+                    @error('transmission')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="images" class="capitalize">images</label>
                     <input type="file" name="images[]" class="block" multiple>
+                    @error('images')
+                            <p class="text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-6 space-y-2 text-center text-xl">
                     <label for="premium" class="capitalize">premium</label>
