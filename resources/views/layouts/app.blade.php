@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cars, cars, cars</title>
     @livewireStyles
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <nav class="shadow-md sticky top-0 z-50 capitalize bg-gray-300">
