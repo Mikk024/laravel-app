@@ -8,4 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Listing extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'fuel',
+        'body',
+        'images',
+        'make_id',
+        'model_id',
+        'color',
+        'year',
+        'horsepower',
+        'transmission',
+        'capacity',
+        'doors'
+    ];
+
+    protected $casts = [
+        'images' => 'array'
+    ];
 }
