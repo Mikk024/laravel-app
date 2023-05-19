@@ -25,8 +25,8 @@ class StoreListingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'make' => ['required', 'string'],
-            'model' => ['required', 'string'],
+            'make_id' => ['required', 'string'],
+            'model_id' => ['required', 'string'],
             'fuel' => ['required', 'string', Rule::in(CarFuel::getValues())],
             'year' => ['required', 'integer'],
             'body' => ['required', 'string', Rule::in(CarBody::getValues())],
@@ -34,7 +34,8 @@ class StoreListingRequest extends FormRequest
             'capacity' => ['required', 'integer'],
             'doors' => ['required', 'integer','between:1,7'],
             'color' => ['required', 'string'],
-            'transmission' => ['required', 'string', Rule::in(['automatic', 'manual'])],
+            'transmission' => ['required', 'string', Rule::in(['Automatic', 'Manual'])],
+            'images.*' => ['image', 'mimes:png,jpg,webp,jpeg']
         ];
     }
 }
