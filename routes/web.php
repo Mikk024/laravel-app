@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('listing')->group(function () {
     Route::get('/create', [ListingController::class, 'create'])->name('listing.create');
