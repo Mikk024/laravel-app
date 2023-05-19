@@ -48,4 +48,15 @@ class ListingController extends Controller
 
        return redirect('/');
     }
+
+    public function show($id)
+    {
+        $listing = Listing::with(['make', 'model', 'user'])->find($id);
+
+        //dd($listing);
+
+        return view('listings.show',[
+            'listing' => $listing
+        ]);
+    }
 }

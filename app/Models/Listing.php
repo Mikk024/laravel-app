@@ -27,4 +27,19 @@ class Listing extends Model
     protected $casts = [
         'images' => 'array'
     ];
+
+    public function make()
+    {
+        return $this->belongsTo(Make::class);
+    }
+
+    public function model()
+    {
+        return $this->belongsTo(CarModel::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

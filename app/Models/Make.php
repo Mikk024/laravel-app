@@ -13,4 +13,9 @@ class Make extends Model
     {
         return $this->hasMany(CarModel::class);
     }
+
+    public function listing()
+    {
+        return $this->hasMany(Listing::class);
+    }
 }
