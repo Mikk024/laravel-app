@@ -39,7 +39,7 @@ class ListingController extends Controller
        if ($request->has('images')) {
         $randomString = Str::random();
         foreach ($request->file('images') as $image) {
-            $path[] = $image->store('listings/' . $randomString);
+            $path[] = $image->store('public/listings/' . $randomString);
         }
         $validated['images'] = $path;
        }
