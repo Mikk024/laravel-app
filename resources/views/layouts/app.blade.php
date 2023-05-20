@@ -13,7 +13,7 @@
         <div class="container px-10 py-4 flex justify-between">
             <a href="{{ route('home')}}">home</a>
             <div class="space-x-2">
-                <a href="#" class="hover:underline">login</a>
+                <a href="{{ route('login.create')}}" class="hover:underline">login</a>
                 <span>/</span>
                 <a href="{{ route('register.create')}}" class="hover:underline">register</a>
                 <a href="{{ route('listing.create')}}" class="px-10 py-2 rounded-md  bg-blue-300 hover:bg-blue-500 hover:text-white">add listing</a>
