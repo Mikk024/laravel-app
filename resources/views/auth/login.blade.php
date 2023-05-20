@@ -11,7 +11,7 @@
                     <input type="email" name="email" class="block mx-auto w-1/2 mb-6 mt-2 rounded-md bg-gray-200">
                     <label for="password" class="capitalize">password</label>
                     <input type="password" name="password" class="block mx-auto w-1/2 mb-6 mt-2 rounded-md bg-gray-200">
-                    <button type="submit" class="px-6 py-2 capitalize bg-red-500 text-white rounded-lg mt-10 hover:bg-red-700 hover:text-black">register</button>
+                    <button type="submit" class="px-6 py-2 capitalize bg-red-500 text-white rounded-lg mt-10 hover:bg-red-700 hover:text-black">login</button>
                 </form>
             </div>
         </div>
