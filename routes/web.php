@@ -29,3 +29,7 @@ Route::prefix('listing')->group(function () {
 // Register
 Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+// Login
+Route::get('/login', [LoginController::class, 'create'])->name('login.create');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
