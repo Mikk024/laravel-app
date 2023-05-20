@@ -13,12 +13,21 @@
         <div class="container px-10 py-4 flex justify-between">
             <a href="{{ route('home')}}">home</a>
             <div class="space-x-2">
-                <a href="{{ route('login.create')}}" class="hover:underline">login</a>
-                <span>/</span>
-                <a href="{{ route('register.create')}}" class="hover:underline">register</a>
+                @guest
+                    <a href="{{ route('login.create')}}" class="hover:underline">login</a>
+                    <span>/</span>
+                    <a href="{{ route('register.create')}}" class="hover:underline">register</a> 
+                @endguest
                 <a href="{{ route('listing.create')}}" class="px-10 py-2 rounded-md  bg-blue-300 hover:bg-blue-500 hover:text-white">add listing</a>
-            </div>
-            
+                @auth
+                    <form action="{{ route('logout') }}" class="inline-block" method="POST">
+                        @csrf
+                        <div>
+                            <button type="submit" class="text-lg capitalize hover:underline">logout</button>
+                        </div>
+                    </form>
+                @endauth
+                </div>
         </div>
     </nav>
     @yield('content')
