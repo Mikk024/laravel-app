@@ -24,8 +24,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Listing
 Route::prefix('listing')->group(function () {
     Route::get('/create', [ListingController::class, 'create'])->name('listing.create');
-    Route::get('/{id}', [ListingController::class, 'show'])->name('listings.show');
+    Route::get('/manage', [ListingController::class, 'manage'])->name('listing.manage');
     Route::post('/store', [ListingController::class, 'store'])->name('listing.store');
+    Route::get('/{id}', [ListingController::class, 'show'])->name('listings.show');
 });
 
 // Register
