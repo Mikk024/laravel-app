@@ -62,6 +62,12 @@ class ListingController extends Controller
 
     public function manage()
     {
-        return view('listings.manage');
+        $userId = auth()->id();
+
+        $data = Listing::with(['make', 'model', 'user'])->where('user_id', $userId)->get();
+
+        return view('listings.manage', [
+            'listings' => $data
+        ]);
     }
 }
