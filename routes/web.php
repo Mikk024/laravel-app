@@ -26,6 +26,7 @@ Route::prefix('listing')->group(function () {
     Route::get('/create', [ListingController::class, 'create'])->name('listing.create');
     Route::get('/manage', [ListingController::class, 'manage'])->name('listing.manage');
     Route::post('/store', [ListingController::class, 'store'])->name('listing.store');
+    Route::delete('/{id}', [ListingController::class, 'destroy'])->name('listing.destroy');
     Route::get('/{id}', [ListingController::class, 'show'])->name('listings.show');
 });
 

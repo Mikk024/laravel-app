@@ -70,4 +70,11 @@ class ListingController extends Controller
             'listings' => $data
         ]);
     }
+
+    public function destroy($id)
+    {
+        Listing::destroy($id);
+
+        return redirect()->back();
+    }
 }
