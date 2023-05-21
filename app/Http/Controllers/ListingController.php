@@ -34,7 +34,7 @@ class ListingController extends Controller
     {        
        $validated = $request->validated();
 
-       $validated['user_id'] = 1;
+       $validated['user_id'] = auth()->id();
 
        if ($request->has('images')) {
         $randomString = Str::random();
@@ -58,5 +58,10 @@ class ListingController extends Controller
         return view('listings.show',[
             'listing' => $listing
         ]);
+    }
+
+    public function manage()
+    {
+        return view('listings.manage');
     }
 }
