@@ -14,12 +14,14 @@
                 </thead>
                 <tbody>
                 @foreach ($listings as $listing)
-                <tr>
+                <tr class="border border-2">
                     <td>{{ $listing->id }}</td>
                     <td><a href="{{ route('listings.show', ['id' => $listing->id])}}" class="hover:underline">{{ $listing->year . ' ' . $listing->make->name . ' ' . $listing->model->name }}</a></td>
                     <td class="space-x-2">
-                        <form action="" class="inline-block">
-                            <button class="capitalize px-4 py-2 bg-red-500 rounded-md text-white hover:bg-red-700">delete</button>
+                        <form action="{{ route('listing.destroy', ['id' => $listing->id]) }}" class="inline-block" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="capitalize px-4 py-2 bg-red-500 rounded-md text-white hover:bg-red-700">delete</button>
                         </form>
                         <a href="#" class="capitalize inline-block px-4 py-2 bg-green-500 rounded-md text-white hover:bg-green-700">edit</a>
                     </td>
