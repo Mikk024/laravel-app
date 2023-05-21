@@ -20,10 +20,12 @@
                 @endguest
                 <a href="{{ route('listing.create')}}" class="px-10 py-2 rounded-md  bg-blue-300 hover:bg-blue-500 hover:text-white">add listing</a>
                 @auth
+                    <a href="{{ route('listing.manage') }}" class="hover:underline">manage listings</a>
+                    <span>/</span>
                     <form action="{{ route('logout') }}" class="inline-block" method="POST">
                         @csrf
                         <div>
-                            <button type="submit" class="text-lg capitalize hover:underline">logout</button>
+                            <button type="submit" class="capitalize hover:underline">logout</button>
                         </div>
                     </form>
                 @endauth
