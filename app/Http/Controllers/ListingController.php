@@ -77,4 +77,36 @@ class ListingController extends Controller
 
         return redirect()->back();
     }
+
+    public function edit($id)
+    {
+        $listing = Listing::with(['make', 'model'])->find($id);
+
+        $fuel = CarFuel::getValues();
+
+        $body = CarBody::getValues();
+
+        $currentYear = Carbon::now()->format('Y');
+
+        $color = CarColor::getValues();
+
+        dump($listing);
+
+        return view('listings.edit',[
+            'listing' => $listing,
+            'fuel' => $fuel,
+            'body' => $body,
+            'currentYear' => $currentYear,
+            'color' => $color
+        ]);
+    }
+
+    public function update(StoreListingRequest $request, $id)
+    {
+        $data = $request->validated();
+
+        Listing::find($id)->update($data);
+
+        return redirect('/');
+    }
 }
