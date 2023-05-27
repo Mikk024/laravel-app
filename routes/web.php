@@ -28,6 +28,8 @@ Route::prefix('listing')->group(function () {
     Route::post('/store', [ListingController::class, 'store'])->name('listing.store');
     Route::delete('/{id}', [ListingController::class, 'destroy'])->name('listing.destroy');
     Route::get('/{id}', [ListingController::class, 'show'])->name('listings.show');
+    Route::get('/edit/{id}', [ListingController::class, 'edit'])->name('listing.edit');
+    Route::put('/update/{id}', [ListingController::class, 'update'])->name('listing.update');
 });
 
 // Register
@@ -40,3 +42,4 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 //Logout
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
+
