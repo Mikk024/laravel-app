@@ -23,7 +23,7 @@
                             @csrf
                             <button type="submit" class="capitalize px-4 py-2 bg-red-500 rounded-md text-white hover:bg-red-700">delete</button>
                         </form>
-                        <a href="#" class="capitalize inline-block px-4 py-2 bg-green-500 rounded-md text-white hover:bg-green-700">edit</a>
+                        <a href="{{ route('listing.edit', ['id' => $listing->id] )}}" class="capitalize inline-block px-4 py-2 bg-green-500 rounded-md text-white hover:bg-green-700">edit</a>
                     </td>
                 </tr>
                 @endforeach
