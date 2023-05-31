@@ -43,3 +43,6 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 //Logout
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
 
+//Search
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+
