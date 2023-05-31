@@ -26,7 +26,7 @@
                 </button>
             </div>
         </div>
-        <form method="POST" class="flex flex-col items-center mt-10" enctype="multipart/form-data" action="{{ route('listing.update', ['id' => $listing->id ]) }}">
+        <form method="POST" class="flex flex-col items-center mt-10 mb-20" enctype="multipart/form-data" action="{{ route('listing.update', ['id' => $listing->id ]) }}">
             @method('PUT')
             @csrf
             @livewire('edit-form', ['id' => $listing->id])
@@ -139,7 +139,7 @@
                 <label for="premium" class="capitalize">premium</label>
                 <input type="checkbox" name="premium">
             </div>
-            <button type="submit" class="capitalize px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700">add</button>
+            <button type="submit" class="capitalize px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700">edit</button>
         </form>
     </div>
 @endsection
