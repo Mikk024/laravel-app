@@ -5,6 +5,8 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Listing
 Route::prefix('listing')->group(function () {
-    Route::get('/create', [ListingController::class, 'create'])->name('listing.create');
+    Route::get('/create', [ListingController::class, 'create'])->name('listing.create')->middleware(Authenticate::class);
     Route::get('/manage', [ListingController::class, 'manage'])->name('listing.manage');
     Route::post('/store', [ListingController::class, 'store'])->name('listing.store');
     Route::delete('/{id}', [ListingController::class, 'destroy'])->name('listing.destroy');
@@ -33,15 +35,19 @@ Route::prefix('listing')->group(function () {
 });
 
 // Register
-Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+Route::middleware(RedirectIfAuthenticated::class)->group(function () {
+    // Register
+    Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+   
+    // Login
+    Route::get('/login', [LoginController::class, 'create'])->name('login.create');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+});
 
-// Login
-Route::get('/login', [LoginController::class, 'create'])->name('login.create');
-Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 //Logout
-Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('logout');
+Route::post('/logout', [LogoutController::class, 'destroy'])->middleware(Authenticate::class)->name('logout');
 
 //Search
 Route::get('/search', [HomeController::class, 'search'])->name('search');
