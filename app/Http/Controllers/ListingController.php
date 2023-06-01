@@ -10,10 +10,14 @@ use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
+
 class ListingController extends Controller
 {
     public function create()
     {
+        $this->authorize('create', Listing::class);
+
         $fuel = CarFuel::getValues();
 
         $body = CarBody::getValues();
@@ -32,6 +36,8 @@ class ListingController extends Controller
 
     public function store(StoreListingRequest $request)
     {        
+        $this->authorize('create', Listing::class);
+
        $validated = $request->validated();
 
        $validated['user_id'] = auth()->id();
@@ -53,8 +59,6 @@ class ListingController extends Controller
     {
         $listing = Listing::with(['make', 'model', 'user'])->find($id);
 
-        //dd($listing);
-
         return view('listings.show',[
             'listing' => $listing
         ]);
@@ -73,6 +77,10 @@ class ListingController extends Controller
 
     public function destroy($id)
     {
+        $listing = Listing::find($id);
+
+        $this->authorize('delete', $listing);
+
         Listing::destroy($id);
 
         return redirect()->back();
@@ -81,6 +89,8 @@ class ListingController extends Controller
     public function edit($id)
     {
         $listing = Listing::with(['make', 'model'])->find($id);
+
+        $this->authorize('update', $listing);
 
         $fuel = CarFuel::getValues();
 
