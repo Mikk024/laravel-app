@@ -39,7 +39,7 @@ class ListingController extends Controller
        if ($request->has('images')) {
         $randomString = Str::random();
         foreach ($request->file('images') as $image) {
-            $path[] = $image->store('public/listings/' . $randomString);
+            $path[] = $image->store($randomString, 'public');
         }
         $validated['images'] = $path;
        }
@@ -89,8 +89,6 @@ class ListingController extends Controller
         $currentYear = Carbon::now()->format('Y');
 
         $color = CarColor::getValues();
-
-        dump($listing);
 
         return view('listings.edit',[
             'listing' => $listing,
