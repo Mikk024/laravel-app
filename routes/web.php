@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\Authenticate;
@@ -52,3 +53,7 @@ Route::post('/logout', [LogoutController::class, 'destroy'])->middleware(Authent
 //Search
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 
+//Admin
+Route::prefix('admin')->group(function () {
+    Route::get('', [AdminController::class, 'index'])->name('admin.index');
+});
