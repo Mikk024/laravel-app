@@ -3,6 +3,7 @@
 @section('content')
     <div class="px-32 mt-10">
         <p class="text-3xl capitalize text-center">manage your listings</p>
+        @if (count($listings) > 0)
         <div class="flex justify-center">
             <table class="table-auto mt-10 text-xl capitalize w-full text-center px-32">
                 <thead>
@@ -29,6 +30,12 @@
                 @endforeach
                 </tbody>
             </table>
+            @else
+            <div class="text-center capitalize">
+                <p class="text-2xl my-5 text-center">you don't have any listings. add one now </p>
+                <a href="{{ route('listing.create') }}" class="px-6 py-3 bg-blue-300 rounded-md hover:underline hover:bg-blue-700 hover:text-white">add listing</a>
+            </div>
+            @endif
         </div>
     </div>
 @endsection
