@@ -28,6 +28,9 @@
                             <button type="submit" class="capitalize hover:underline">logout</button>
                         </div>
                     </form>
+                    @can('admin-level')
+                        <a href="{{ route('admin.index') }}" class="hover:underline">admin panel</a>
+                    @endcan
                 @endauth
                 </div>
         </div>
