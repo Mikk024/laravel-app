@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Enums\CarBody;
 use App\Enums\CarColor;
 use App\Enums\CarFuel;
+use App\Interfaces\ListingRepositoryInterface;
 use App\Http\Requests\StoreListingRequest;
 use App\Models\Listing;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Gate;
 
 class ListingController extends Controller
 {
+
+    private ListingRepositoryInterface $listingRepository;
+    public function __construct(ListingRepositoryInterface $listingRepository)
+    {
+        $this->listingRepository = $listingRepository;
+    }
+
+
     public function create()
     {
         $this->authorize('create', Listing::class);
@@ -50,17 +57,15 @@ class ListingController extends Controller
         $validated['images'] = $path;
        }
 
-       Listing::create($validated);
+       $this->listingRepository->createListing($validated);
 
        return redirect('/');
     }
 
     public function show($id)
     {
-        $listing = Listing::with(['make', 'model', 'user'])->find($id);
-
         return view('listings.show',[
-            'listing' => $listing
+            'listing' => $this->listingRepository->getListingById($id)
         ]);
     }
 
@@ -68,27 +73,25 @@ class ListingController extends Controller
     {
         $userId = auth()->id();
 
-        $data = Listing::with(['make', 'model', 'user'])->where('user_id', $userId)->get();
-
         return view('listings.manage', [
-            'listings' => $data
+            'listings' => $this->listingRepository->getUserListings($userId)
         ]);
     }
 
     public function destroy($id)
     {
-        $listing = Listing::find($id);
+        $listing = $this->listingRepository->getListingById($id);
 
         $this->authorize('delete', $listing);
 
-        Listing::destroy($id);
+        $this->listingRepository->deleteListing($id);
 
         return redirect()->back();
     }
 
     public function edit($id)
     {
-        $listing = Listing::with(['make', 'model'])->find($id);
+        $listing = $this->listingRepository->getListingById($id);
 
         $this->authorize('update', $listing);
 
@@ -113,7 +116,7 @@ class ListingController extends Controller
     {
         $data = $request->validated();
 
-        Listing::find($id)->update($data);
+        $this->listingRepository->updateListing($id, $data);
 
         return redirect('/');
     }
