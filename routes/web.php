@@ -26,13 +26,17 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Listing
 Route::prefix('listing')->group(function () {
-    Route::get('/create', [ListingController::class, 'create'])->name('listing.create')->middleware(Authenticate::class);
-    Route::get('/manage', [ListingController::class, 'manage'])->name('listing.manage');
-    Route::post('/store', [ListingController::class, 'store'])->name('listing.store');
-    Route::delete('/{id}', [ListingController::class, 'destroy'])->name('listing.destroy');
+    Route::middleware(Authenticate::class)->group(function () {
+        Route::get('/create', [ListingController::class, 'create'])->name('listing.create');
+        Route::get('/manage', [ListingController::class, 'manage'])->name('listing.manage');
+        Route::post('/store', [ListingController::class, 'store'])->name('listing.store');
+        Route::delete('/{id}', [ListingController::class, 'destroy'])->name('listing.destroy');
+        Route::get('/edit/{id}', [ListingController::class, 'edit'])->name('listing.edit');
+        Route::put('/update/{id}', [ListingController::class, 'update'])->name('listing.update');
+    });
+   
+    
     Route::get('/{id}', [ListingController::class, 'show'])->name('listings.show');
-    Route::get('/edit/{id}', [ListingController::class, 'edit'])->name('listing.edit');
-    Route::put('/update/{id}', [ListingController::class, 'update'])->name('listing.update');
 });
 
 // Register
