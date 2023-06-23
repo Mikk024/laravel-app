@@ -7,7 +7,11 @@
             <a href="{{ route('listings.show', ['id' => $listing->id])}}">
                 <div class="border-top flex flex-row shadow-lg rounded-md mb-6">
                     <div class="basis-2/5">
-                        <img src="{{ asset('storage/' . $listing->images[0])}}" class="h-48 w-96  rounded-md object-cover">
+                        @if ($listing->images)
+                            <img src="{{ asset('storage/' . $listing->images[0])}}" class="h-48 w-96  rounded-md object-cover">
+                        @else
+                            <img src="{{ asset('storage/no-image.jpeg') }}" class="h-48 w-96  rounded-md object-cover"> 
+                        @endif
                     </div>
                     <div class="basis-3/5">
                         <p class="my-2 text-2xl hover:underline">{{ $listing->make->name . ' ' . $listing->model->name }}</p>

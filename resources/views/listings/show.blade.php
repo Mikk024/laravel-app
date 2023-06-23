@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="px-20 mt-10 mb-32">
+        @if ($listing->images)
         <div id="animation-carousel" class="relative w-full" data-carousel="static">
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                 @foreach ($listing->images as $image)
@@ -22,6 +23,9 @@
                 </span>
             </button>
         </div>
+        @else
+            <img src="{{ asset('storage/no-image.jpeg') }}" class="w-full">
+        @endif
         <p class="text-4xl text-center mt-10">{{ $listing->make->name . ' ' . $listing->model->name}}</p>
         <div class="mt-10 flex justify-center px-12">
             <div class="basis-1/2 space-y-2">
