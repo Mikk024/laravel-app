@@ -39,120 +39,104 @@ class HomeController extends Controller
 
         $fuel = $request->input('fuel');
 
-        // No inputs
-        if (!$hasMake && !$hasModel && !$hasFuel && !$hasBody) {
-            $listing = Listing::with(['make', 'model'])
-                ->paginate(2);
-        }
+        $listings = Listing::query()->with(['make', 'model']);
 
         // One input
+
         if ($hasMake) {
-            $listing = Listing::with(['make', 'model'])
-                ->where('make_id', $make)
-                ->get();
+            $listings->where('make_id', $make);
         }
 
         if ($hasModel) {
-            $listing = Listing::with(['make', 'model'])
-                ->where('model_id', $model)
-                ->get();
-        };
+            $listings->where('model_id', $model);
+        }
 
         if ($hasBody) {
-            $listing = Listing::with(['make', 'model'])
-                ->where('body', $body)
-                ->get();
+            $listings->where('body', $body);
         }
 
         if ($hasFuel) {
-            $listing = Listing::with(['make', 'model'])
-                ->where('fuel', $fuel)
-                ->get();
+            $listings->where('fuel', $fuel);
         }
 
         // Two inputs
 
         if ($hasMake && $hasModel) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('make_id', $make)
                 ->where('model_id', $model)
-                ->get();
-        }
-
-        if ($hasMake && $hasBody) {
-            $listing = Listing::with(['make', 'model'])
-                ->where('make_id', $make)
-                ->where('body', $body)
-                ->get();
+                ;
         }
 
         if ($hasMake && $hasFuel) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('make_id', $make)
                 ->where('fuel', $fuel)
-                ->get();
+                ;
         }
 
         if ($hasModel && $hasFuel) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('model_id', $model)
                 ->where('fuel', $fuel)
-                ->get();
+                ;
         }
 
         if ($hasModel && $hasBody) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('model_id', $model)
                 ->where('fuel', $fuel)
-                ->get();
+                ;
         }
 
         if ($hasFuel && $hasBody) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('fuel', $fuel)
                 ->where('body', $body)
-                ->get();
+                ;
         }
 
         // Three Inputs
 
         if  ($hasMake && $hasModel && $hasFuel) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('make_id', $make)
                 ->where('model_id', $model)
                 ->where('fuel', $fuel)
-                ->get();
+                ;
         }
 
         if ($hasMake && $hasModel && $hasBody) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('make_id', $make)
                 ->where('model_id', $model)
                 ->where('body', $body)
-                ->get();
+                ;
         }
 
         if ($hasModel && $hasBody && $hasFuel) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('model_id', $model)
                 ->where('body', $body)
                 ->where('fuel', $fuel)
-                ->get();
+                ;
         }
-
 
         // Four inputs
+        
         if ($hasMake && $hasModel && $hasBody && $hasFuel) {
-            $listing = Listing::with(['make', 'model'])
+            $listings
                 ->where('make_id', $make)
-                ->where('model', $model)
+                ->where('model_id', $model)
                 ->where('body', $body)
                 ->where('fuel', $fuel)
-                ->get();
+                ;
         }
 
+        $listings = $listings->paginate(2);
+
         return view('search', [
-            'listings' => $listing
+            'listings' => $listings
         ]);
 
     }
