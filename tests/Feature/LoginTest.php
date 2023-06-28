@@ -39,7 +39,7 @@ class LoginTest extends TestCase
 
     public function test_user_cannot_view_a_login_form_when_authenticated()
     {
-        $user = User::factory()->make();
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/login');
 
