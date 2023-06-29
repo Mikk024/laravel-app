@@ -25,8 +25,8 @@ class StoreListingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'make_id' => ['required', 'string'],
-            'model_id' => ['required', 'string'],
+            'make_id' => ['required'],
+            'model_id' => ['required'],
             'fuel' => ['required', 'string', Rule::in(CarFuel::getValues())],
             'year' => ['required', 'integer'],
             'body' => ['required', 'string', Rule::in(CarBody::getValues())],
