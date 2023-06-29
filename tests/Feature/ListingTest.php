@@ -7,9 +7,6 @@ use App\Models\Listing;
 use App\Models\Make;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Database\Seeders\MakeSeeder;
-use Database\Seeders\ModelSeeder;
 use Tests\TestCase;
 
 class ListingTest extends TestCase
@@ -20,6 +17,24 @@ class ListingTest extends TestCase
 
     use RefreshDatabase;
 
+    private User $user;
+    private Make $make;
+    private CarModel $model;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+
+        $this->user = User::factory()->create();
+
+        $this->make = Make::factory()->create();
+
+        $this->model = CarModel::factory()->create([
+            'make_id' => $this->make->id
+        ]);
+    }
+
     public function test_guest_cannot_view_add_listing_form(): void
     {
         $response = $this->get('/listing/create');
@@ -29,22 +44,16 @@ class ListingTest extends TestCase
 
     public function test_user_can_view_add_listing_form()
     {
-        $user = User::factory()->make();
-
-        $response = $this->actingAs($user)->get('/listing/create');
+        $response = $this->actingAs($this->user)->get('/listing/create');
 
         $response->assertStatus(200);
     }
 
     public function test_user_can_add_listing()
     {
-        $user = User::factory()->create();
-
-        $this->seed([MakeSeeder::class, ModelSeeder::class]);
-
-        $response = $this->actingAs($user)->post('/listing/store', [
-            'make_id' => '1',
-            'model_id' => '1',
+        $response = $this->actingAs($this->user)->post('/listing/store', [
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id,
             'fuel' => 'Diesel',
             'year' => 1992,
             'body' => 'Coupe',
@@ -56,47 +65,62 @@ class ListingTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('listings',[
-            'user_id' => $user->id
+            'user_id' => $this->user->id
         ]);
 
         $response->assertRedirect('/');
     }
 
+    public function test_user_can_edit_listing()
+    {
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
+        ]);
+
+
+        $this->assertDatabaseHas('listings', [
+            'id' => $listing->id,
+            'fuel' => 'Diesel'
+        ]);
+
+        $this->actingAs($this->user)->put('/listing/update/' . $listing->id, [
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id,
+            'year' => 1986,
+            'body' => 'Wagon',
+            'horsepower' => 150,
+            'capacity' => 1998,
+            'doors' => 5,
+            'color' => 'Silver',
+            'transmission' => 'Manual',
+            'fuel' => 'Gas'
+        ]);
+
+        $this->assertDatabaseHas('listings', [
+            'id' => $listing->id,
+            'fuel' => 'Gas'
+        ]);
+
+    }
+
     public function test_user_can_view_edit_listing_form()
     {
-        $user = User::factory()->create();
-
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
-
-        $listing = Listing::factory()->for($user)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
-        ]);
-
-        $response = $this->actingAs($user)->get('/listing/edit/' . $listing->id);
+        $response = $this->actingAs($this->user)->get('/listing/edit/' . $listing->id);
 
         $response->assertStatus(200);
     }
 
     public function test_guest_cannot_view_edit_listing_form()
     {
-        $user = User::factory()->create();
-
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
-        ]);
-
-
-        $listing = Listing::factory()->for($user)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
         $response = $this->get('/listing/edit/' . $listing->id);
@@ -106,25 +130,16 @@ class ListingTest extends TestCase
 
     public function test_user_can_delete_his_own_listing()
     {
-        $user = User::factory()->create();
-
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
-        ]);
-
-
-        $listing = Listing::factory()->for($user)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
         $this->assertDatabaseHas('listings', [
             'id' => $listing->id
         ]);
 
-        $response = $this->actingAs($user)->delete('/listing/' . $listing->id);
+        $response = $this->actingAs($this->user)->delete('/listing/' . $listing->id);
 
         $response->assertRedirect('/');
 
@@ -141,15 +156,9 @@ class ListingTest extends TestCase
 
         $secondUser = $users->last();
 
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
-        ]);
-
         $listing = Listing::factory()->for($firstUser)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
         $this->assertDatabaseHas('listings', [
@@ -163,18 +172,9 @@ class ListingTest extends TestCase
 
     public function test_guest_cannot_delete_listing()
     {
-        $user = User::factory()->create();
-
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
-        ]);
-
-
-        $listing = Listing::factory()->for($user)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
         $this->assertDatabaseHas('listings', [
@@ -188,9 +188,7 @@ class ListingTest extends TestCase
 
     public function test_user_can_view_manage_listings()
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get('/listing/manage');
+        $response = $this->actingAs($this->user)->get('/listing/manage');
 
         $response->assertStatus(200);
 
@@ -199,25 +197,17 @@ class ListingTest extends TestCase
 
     public function test_user_can_view_his_listing_in_manage_listings()
     {
-        $user = User::factory()->create();
-
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
-        ]);
-
-
-        $listing = Listing::factory()->for($user)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
+    
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
         $this->assertDatabaseHas('listings', [
             'id' => $listing->id
         ]);
 
-        $response = $this->actingAs($user)->get('/listing/manage');
+        $response = $this->actingAs($this->user)->get('/listing/manage');
 
         $response->assertStatus(200);
 
@@ -235,18 +225,9 @@ class ListingTest extends TestCase
 
     public function test_can_view_listing()
     {
-        $user = User::factory()->create();
-
-        $make = Make::factory()->create();
-
-        $model = CarModel::factory()->create([
-            'make_id' => $make->id
-        ]);
-
-
-        $listing = Listing::factory()->for($user)->create([
-            'make_id' => $make->id,
-            'model_id' => $model->id
+        $listing = Listing::factory()->for($this->user)->create([
+            'make_id' => $this->make->id,
+            'model_id' => $this->model->id
         ]);
 
         $response = $this->get('/listing/' . $listing->id);
@@ -254,7 +235,7 @@ class ListingTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_view_non_existing_listing()
+    public function test_cannot_view_non_existing_listing()
     {
         $response = $this->get('/listing/1');
 
