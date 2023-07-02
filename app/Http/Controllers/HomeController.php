@@ -39,102 +39,22 @@ class HomeController extends Controller
 
         $fuel = $request->input('fuel');
 
-        $listings = Listing::query()->with(['make', 'model']);
-
-        // One input
-
-        if ($hasMake) {
-            $listings->where('make_id', $make);
-        }
-
-        if ($hasModel) {
-            $listings->where('model_id', $model);
-        }
-
-        if ($hasBody) {
-            $listings->where('body', $body);
-        }
-
-        if ($hasFuel) {
-            $listings->where('fuel', $fuel);
-        }
-
-        // Two inputs
-
-        if ($hasMake && $hasModel) {
-            $listings
-                ->where('make_id', $make)
-                ->where('model_id', $model)
-                ;
-        }
-
-        if ($hasMake && $hasFuel) {
-            $listings
-                ->where('make_id', $make)
-                ->where('fuel', $fuel)
-                ;
-        }
-
-        if ($hasModel && $hasFuel) {
-            $listings
-                ->where('model_id', $model)
-                ->where('fuel', $fuel)
-                ;
-        }
-
-        if ($hasModel && $hasBody) {
-            $listings
-                ->where('model_id', $model)
-                ->where('fuel', $fuel)
-                ;
-        }
-
-        if ($hasFuel && $hasBody) {
-            $listings
-                ->where('fuel', $fuel)
-                ->where('body', $body)
-                ;
-        }
-
-        // Three Inputs
-
-        if  ($hasMake && $hasModel && $hasFuel) {
-            $listings
-                ->where('make_id', $make)
-                ->where('model_id', $model)
-                ->where('fuel', $fuel)
-                ;
-        }
-
-        if ($hasMake && $hasModel && $hasBody) {
-            $listings
-                ->where('make_id', $make)
-                ->where('model_id', $model)
-                ->where('body', $body)
-                ;
-        }
-
-        if ($hasModel && $hasBody && $hasFuel) {
-            $listings
-                ->where('model_id', $model)
-                ->where('body', $body)
-                ->where('fuel', $fuel)
-                ;
-        }
-
-        // Four inputs
-        
-        if ($hasMake && $hasModel && $hasBody && $hasFuel) {
-            $listings
-                ->where('make_id', $make)
-                ->where('model_id', $model)
-                ->where('body', $body)
-                ->where('fuel', $fuel)
-                ;
-        }
-
-        $listings = $listings->paginate(2);
-
+        $listings = Listing::query()->with(['make', 'model'])
+            ->when($hasBody, function ($query) use ($body) {
+                $query->where('body', $body);
+            })
+            ->when($hasMake, function ($query) use ($make) {
+                $query->where('make_id', $make);
+            })
+            ->when($hasModel, function ($query) use ($model) {
+                $query->where('model_id', $model);
+            })
+            ->when($hasFuel, function ($query) use ($fuel) {
+                $query->where('fuel', $fuel);
+            })
+            ->paginate(2);
+            
+            
         return view('search', [
             'listings' => $listings
         ]);
